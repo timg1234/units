@@ -1,7 +1,3 @@
-/**
- * Convert values based on the input type.
- * @param {string} type - The type of the input (kW, HP, Btu, Ton, C, F, R, K).
- */
 function convert(type) {
   // Constants for power conversions
   const kWtoBtu = 3412.14;
@@ -16,7 +12,11 @@ function convert(type) {
   const RtoC = (r) => ((r - 491.67) * 5) / 9;
   const KtoC = (k) => k - 273.15;
 
+  // Functions for water side conversions
+  const calculatePower = (GPM, dT) => 500 * GPM * dT;
+
   switch (type) {
+    // Power
     case "kW":
       let kWValue = parseFloat(document.getElementById("kWInput").value);
       if (!isNaN(kWValue)) {
@@ -80,6 +80,7 @@ function convert(type) {
       }
       break;
 
+    // Temperatures
     case "C":
       let CValue = parseFloat(document.getElementById("CInput").value);
       if (!isNaN(CValue)) {
@@ -92,30 +93,41 @@ function convert(type) {
     case "F":
       let FValue = parseFloat(document.getElementById("FInput").value);
       if (!isNaN(FValue)) {
-        let convertedC = FtoC(FValue);
-        document.getElementById("CInput").value = convertedC.toFixed(3);
-        document.getElementById("RInput").value = CtoR(convertedC).toFixed(3);
-        document.getElementById("KInput").value = CtoK(convertedC).toFixed(3);
+        document.getElementById("CInput").value = FtoC(FValue).toFixed(3);
+        document.getElementById("RInput").value = CtoR(FtoC(FValue)).toFixed(3);
+        document.getElementById("KInput").value = CtoK(FtoC(FValue)).toFixed(3);
       }
       break;
 
     case "R":
       let RValue = parseFloat(document.getElementById("RInput").value);
       if (!isNaN(RValue)) {
-        let convertedC = RtoC(RValue);
-        document.getElementById("CInput").value = convertedC.toFixed(3);
-        document.getElementById("FInput").value = CtoF(convertedC).toFixed(3);
-        document.getElementById("KInput").value = CtoK(convertedC).toFixed(3);
+        document.getElementById("CInput").value = RtoC(RValue).toFixed(3);
+        document.getElementById("FInput").value = CtoF(RtoC(RValue)).toFixed(3);
+        document.getElementById("KInput").value = CtoK(RtoC(RValue)).toFixed(3);
       }
       break;
 
     case "K":
       let KValue = parseFloat(document.getElementById("KInput").value);
       if (!isNaN(KValue)) {
-        let convertedC = KtoC(KValue);
-        document.getElementById("CInput").value = convertedC.toFixed(3);
-        document.getElementById("FInput").value = CtoF(convertedC).toFixed(3);
-        document.getElementById("RInput").value = CtoR(convertedC).toFixed(3);
+        document.getElementById("CInput").value = KtoC(KValue).toFixed(3);
+        document.getElementById("FInput").value = CtoF(KtoC(KValue)).toFixed(3);
+        document.getElementById("RInput").value = CtoR(KtoC(KValue)).toFixed(3);
+      }
+      break;
+
+    // Water Side
+    case "WaterSide":
+      let GPMValue = parseFloat(document.getElementById("GPMInput").value);
+      let T2Value = parseFloat(document.getElementById("T2Input").value);
+      let T1Value = parseFloat(document.getElementById("T1Input").value);
+      if (!isNaN(GPMValue) && !isNaN(T2Value) && !isNaN(T1Value)) {
+        let dT = T2Value - T1Value;
+        document.getElementById("PowerInput").value = calculatePower(
+          GPMValue,
+          dT
+        ).toFixed(3);
       }
       break;
   }

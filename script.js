@@ -14,6 +14,7 @@ function convert(type) {
 
   // Functions for water side conversions
   const calculatePower = (GPM, dT) => 500 * GPM * dT;
+  const calculatePowerAirSide = (CFM, dT) => 1.085 * CFM * dT;
 
   switch (type) {
     // Power
@@ -126,6 +127,20 @@ function convert(type) {
         let dT = T2Value - T1Value;
         document.getElementById("PowerInput").value = calculatePower(
           GPMValue,
+          dT
+        ).toFixed(3);
+      }
+      break;
+
+    // Air Side
+    case "AirSide":
+      let CFMValue = parseFloat(document.getElementById("CFMInput").value);
+      let T4Value = parseFloat(document.getElementById("T4Input").value);
+      let T3Value = parseFloat(document.getElementById("T3Input").value);
+      if (!isNaN(CFMValue) && !isNaN(T4Value) && !isNaN(T3Value)) {
+        let dT = T4Value - T3Value;
+        document.getElementById("PowerInput2").value = calculatePowerAirSide(
+          CFMValue,
           dT
         ).toFixed(3);
       }

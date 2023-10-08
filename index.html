@@ -104,6 +104,35 @@
 
       <input type="number" id="PowerInput" placeholder="Enter #" readonly />
       <label for="PowerInput" class="unit-label">Btu/h</label>
+
+      <!-- Air Side -->
+      <span class="label" style="color: red">Air Side</span>
+      <input
+        type="number"
+        id="CFMInput"
+        placeholder="Enter #"
+        oninput="convert('AirSide')"
+      />
+      <label for="CFMInput" class="unit-label">CFM</label>
+
+      <input
+        type="number"
+        id="T4Input"
+        placeholder="Enter #"
+        oninput="convert('AirSide')"
+      />
+      <label for="T4Input" class="unit-label">T4 (F)</label>
+
+      <input
+        type="number"
+        id="T3Input"
+        placeholder="Enter #"
+        oninput="convert('AirSide')"
+      />
+      <label for="T3Input" class="unit-label">T3 (F)</label>
+
+      <input type="number" id="PowerInput2" placeholder="Enter #" readonly />
+      <label for="PowerInput2" class="unit-label">Btu/h<sub>2</sub></label>
     </div>
 
     <script src="script.js"></script>

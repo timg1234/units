@@ -128,7 +128,7 @@ function convert(type) {
         document.getElementById("PowerInput").value = calculatePower(
           GPMValue,
           dT
-        ).toFixed(3);
+        ).toFixed(0);
       }
       break;
 
@@ -142,7 +142,7 @@ function convert(type) {
         document.getElementById("PowerInput2").value = calculatePowerAirSide(
           CFMValue,
           dT
-        ).toFixed(3);
+        ).toFixed(0);
       }
       break;
   }
